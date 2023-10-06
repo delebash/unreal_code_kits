@@ -144,6 +144,9 @@ class PostController extends Controller
             ->when(request('search_content'), function ($query) {
                 $query->where('content', 'like', '%' . request('search_content') . '%');
             })
+            ->when(request('search_user_id'), function ($query) {
+                $query->where('user_id', request('search_user_id'));
+            })
             ->when(request('search_global'), function ($query) {
                 $query->where(function ($q) {
                     $q->where('id', request('search_global'))
@@ -167,7 +170,6 @@ class PostController extends Controller
 
     public function getPost($id)
     {
-//        return Post::with('categories', 'user', 'media')->findOrFail($id);
 
         $post = Post::with('categories', 'user', 'media')->findOrFail($id);
         return new PostResource($post);

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -86,6 +87,7 @@ class AuthenticatedSessionController extends Controller
             'name' => $request['name'],
         ]);
 
+        $user->assignRole(['user']);
         return $this->successResponse($user, 'Registration Successfully');
     }
 }
