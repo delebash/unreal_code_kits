@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <Pagination :data="permissions" :limit="3"
+                    <Bootstrap5Pagination :data="permissions" :limit="3"
                                 @pagination-change-page="page => getPermissions(page, search_id, search_title, search_global, orderColumn, orderDirection)"
                                 class="mt-4"/>
                 </div>

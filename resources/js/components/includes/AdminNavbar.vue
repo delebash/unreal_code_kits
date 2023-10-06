@@ -16,7 +16,7 @@
                             Posts
                         </router-link>
                     </li> -->
-                    <LocaleSwitcher />
+<!--                    <LocaleSwitcher />-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
@@ -25,7 +25,6 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
                             <li><router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link></li>
-                            <li><a class="dropdown-item" href="#">Setting</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

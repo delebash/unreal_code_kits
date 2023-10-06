@@ -39,7 +39,7 @@
         <div class="row">
             <div v-for="post in posts?.data" :key="post.id" class="col-sm-3">
 
-                <div class="card" style="width: 20rem;">
+                <div class="card mb-2" style="width: 20rem;">
                     <img :src="getImageUrl(post)" width="200" height="200" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>

@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <Pagination :data="categories" :limit="3"
+                    <Bootstrap5Pagination :data="categories" :limit="3"
                                 @pagination-change-page="page => getCategories(page, search_id, search_title, search_global, orderColumn, orderDirection)"
                                 class="mt-4"/>
                 </div>
