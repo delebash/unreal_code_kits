@@ -14,7 +14,7 @@
                         <input v-model="search_global" type="text" placeholder="Search..."
                                class="form-control w-25">
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive mb-4">
                         <table class="table" style="position: absolute; z-index: 30">
                             <thead>
                             <tr>
@@ -44,6 +44,7 @@
                             </thead>
                         </table>
                     </div>
+
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
