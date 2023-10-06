@@ -30,6 +30,6 @@ app.use(store)
 app.use(VueSweetalert2)
 app.use(i18n)
 app.use(abilitiesPlugin, ability)
-app.component('Pagination', Bootstrap5Pagination)
+app.component('Bootstrap5Pagination', Bootstrap5Pagination)
 app.component("v-select", vSelect);
 app.mount('#app')
