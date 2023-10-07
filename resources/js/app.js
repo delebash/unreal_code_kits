@@ -1,7 +1,6 @@
 import './bootstrap';
 
 import { createApp } from 'vue';
-import { Bootstrap5Pagination } from 'laravel-vue-pagination';
 import store from './store'
 import router from './routes/index'
 import VueSweetalert2 from "vue-sweetalert2";
@@ -10,6 +9,8 @@ import ability from './services/ability';
 import vSelect from "vue-select";
 import useAuth from './composables/auth';
 import i18n from "./plugins/i18n";
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
@@ -30,6 +31,6 @@ app.use(store)
 app.use(VueSweetalert2)
 app.use(i18n)
 app.use(abilitiesPlugin, ability)
-app.component('Bootstrap5Pagination', Bootstrap5Pagination)
 app.component("v-select", vSelect);
+app.component('QuillEditor', QuillEditor)
 app.mount('#app')

@@ -13,23 +13,25 @@
                         <input v-model="search_global" type="text" placeholder="Search..."
                                class="form-control w-25">
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="col-xs-1">
+                            <input v-model="search_id" type="text"
+                                   class="mt-1 form-control"
+                                   placeholder="Filter by ID">
+                        </div>
+                        &nbsp;
+                        &nbsp;
+                        <div class="col-sm-4">
+                            <input v-model="search_title" type="text"
+                                   class="mt-1 form-control"
+                                   placeholder="Filter by Title">
+                        </div>
+                    </div>
+                    <div class="overflow-auto" style="min-height:200px;max-height:400px">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <input v-model="search_id" type="text"
-                                           class="inline-block mt-1 form-control"
-                                           placeholder="Filter by ID">
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-left">
-                                    <input v-model="search_title" type="text"
-                                           class="inline-block mt-1 form-control"
-                                           placeholder="Filter by Title">
-                                </th>
-                                <th class="px-6 py-3 text-start"></th>
-                                <th class="px-6 py-3 text-start"></th>
-                            </tr>
+
                             <tr>
                                 <th class="px-6 py-3 text-start">
                                     <div class="flex flex-row"
@@ -115,11 +117,9 @@
                             </tbody>
                         </table>
                     </div>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <Bootstrap5Pagination :data="roles" :limit="3"
-                                @pagination-change-page="page => getRoles(page, search_id, search_title, search_global, orderColumn, orderDirection)"
-                                class="mt-4"/>
                 </div>
             </div>
         </div>

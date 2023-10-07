@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <h2 class="text-center my-4">Code Kits</h2>
+    <div class="container-fluid">
+        <h2 class="text-center my-6">Code Kits</h2>
         <div class="row mb-2">
             <table class="table">
                 <thead>
@@ -11,8 +11,8 @@
                                placeholder="Filter by Title">
                     </th>
                     <th class="px-6 py-3 bg-gray-50 text-left">
-                        Categories:
                         <v-select multiple v-model="search_category" :options="categoryList"
+                                  placeholder="Select Category"
                                   :reduce="category => category.id" label="name" class="form-control w-100"/>
                     </th>
                     <th class="px-6 py-3 bg-gray-50 text-left">
@@ -35,31 +35,33 @@
                 </thead>
             </table>
         </div>
+        <div class="overflow-y-auto overflow-hidden" style="min-height:600px;max-height:600px">
+            <div class="row">
+                <div v-for="post in posts?.data" :key="post.id" class="col-3">
 
-        <div class="row">
-            <div v-for="post in posts?.data" :key="post.id" class="col-sm-3">
-
-                <div class="card mb-2" style="width: 20rem;">
-                    <img :src="getImageUrl(post)" width="200" height="200" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <div class="card-text small">On: {{ formatDate(post.created_at) }}</div>
-<!--                        <a :href="$router.resolve({name:'category', params: {id: category.id}}).href">-->
-<!--                            {{category.name}}-->
-<!--                            <span>({{category.posts.length}})</span>-->
-<!--                        </a>-->
-                        <div class="card-text small mb-1">By: <a href="#" @click.prevent="getUserPosts(post?.user?.id)">{{ post?.user?.name }}</a></div>
-                        <p class="card-text">{{ post.content.substring(0, 100) + "..." }}</p>
-                        <p class="card-text">
-                            Categories:
-                            <strong class="m-1" v-for="category in post.categories" :key="category.id">
-                                <router-link :to="{ name: 'category-posts.index', params: { id: category.id } }">{{ category.name }}</router-link>
-                            </strong>
-                        </p>
-                        <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
-                                     class="btn btn-primary">View
-                        </router-link>
-                        <a href="#" class="btn btn-success m-2">Download</a>
+                    <div class="card mb-2" style="width: 24rem;">
+                        <img :src="getImageUrl(post)" width="200" height="200" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{ post.title }}</b></h5>
+                            <div class="card-text small">On: {{ formatDate(post.created_at) }}</div>
+                            <div class="card-text small mb-1">By: <a href="#"
+                                                                     @click.prevent="getUserPosts(post?.user?.id)">{{
+                                    post?.user?.name
+                                }}</a></div>
+                            <p class="card-text">{{ post.content.substring(0, 100) + "..." }}</p>
+                            <p class="card-text">
+                                Categories:
+                                <strong class="m-1" v-for="category in post.categories" :key="category.id">
+                                    <router-link :to="{ name: 'category-posts.index', params: { id: category.id } }">
+                                        {{ category.name }}
+                                    </router-link>
+                                </strong>
+                            </p>
+                            <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
+                                         class="btn btn-primary">View
+                            </router-link>
+                            <a href="#" class="btn btn-success m-2">Download</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,7 +178,7 @@ watch(search_global, _.debounce((current, previous) => {
     )
 }, 200))
 
-function getUserPosts(id){
+function getUserPosts(id) {
     search_user_id.value = id
     getDisplayPosts(
         1,

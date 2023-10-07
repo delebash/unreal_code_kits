@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-center my-5">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <form @submit.prevent="submitForm">
@@ -22,7 +22,7 @@
                         <!-- Content -->
                         <div class="mb-3">
                             <label for="post-content" class="form-label">
-                                Content
+                                Short Description
                             </label>
                             <textarea v-model="post.content" id="post-content" class="form-control"></textarea>
                             <div class="text-danger mt-1">
@@ -34,12 +34,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            Details
+                            <quill-editor  toolbar="essential" theme="snow"></quill-editor>
+                        </div>
                         <!-- Category -->
                         <div class="mb-3">
                             <label for="post-category" class="form-label">
                                 Category
                             </label>
-                            <v-select multiple v-model="post.categories" :options="categoryList" :reduce="category => category.id" label="name" class="form-control" />
+                            <v-select multiple v-model="post.categories" :options="categoryList"
+                                      :reduce="category => category.id" label="name" class="form-control"/>
                             <div class="text-danger mt-1">
                                 {{ errors.categories }}
                             </div>
@@ -53,7 +58,8 @@
                             <label for="thumbnail" class="form-label">
                                 Thumbnail
                             </label>
-                            <input @change="post.thumbnail = $event.target.files[0]" type="file" class="form-control" id="thumbnail" />
+                            <input @change="post.thumbnail = $event.target.files[0]" type="file" class="form-control"
+                                   id="thumbnail"/>
                             <div class="text-danger mt-1">
                                 <div v-for="message in validationErrors?.thumbnail">
                                     {{ message }}
@@ -75,38 +81,43 @@
     </div>
 </template>
 <script setup>
-    import { onMounted, reactive } from "vue";
-    import useCategories from "@/composables/categories";
-    import usePosts from "@/composables/posts";
-    import { useForm, useField, defineRule } from "vee-validate";
-    import { required, min } from "@/validation/rules"
-    defineRule('required', required)
-    defineRule('min', min);
+import {onMounted, reactive} from "vue";
+import useCategories from "@/composables/categories";
+import usePosts from "@/composables/posts";
+import {useForm, useField, defineRule} from "vee-validate";
+import {required, min} from "@/validation/rules"
 
-    // Define a validation schema
-    const schema = {
-        title: 'required|min:5',
-        content: 'required|min:50',
-        categories: 'required'
-    }
-    // Create a form context with the validation schema
-    const { validate, errors } = useForm({ validationSchema: schema })
-    // Define actual fields for validation
-    const { value: title } = useField('title', null, { initialValue: '' });
-    const { value: content } = useField('content', null, { initialValue: '' });
-    const { value: categories } = useField('categories', null, { initialValue: '', label: 'category' });
-    const { categoryList, getCategoryList } = useCategories()
-    const { storePost, validationErrors, isLoading } = usePosts()
-    const post = reactive({
-        title,
-        content,
-        categories,
-        thumbnail: ''
+defineRule('required', required)
+defineRule('min', min);
+
+// Define a validation schema
+const schema = {
+    title: 'required|min:5',
+    content: 'required|min:50',
+    categories: 'required'
+}
+// Create a form context with the validation schema
+const {validate, errors} = useForm({validationSchema: schema})
+// Define actual fields for validation
+const {value: title} = useField('title', null, {initialValue: ''});
+const {value: content} = useField('content', null, {initialValue: ''});
+const {value: categories} = useField('categories', null, {initialValue: '', label: 'category'});
+const {categoryList, getCategoryList} = useCategories()
+const {storePost, validationErrors, isLoading} = usePosts()
+const post = reactive({
+    title,
+    content,
+    categories,
+    thumbnail: ''
+})
+
+function submitForm() {
+    validate().then(form => {
+        if (form.valid) storePost(post)
     })
-    function submitForm() {
-        validate().then(form => { if (form.valid) storePost(post) })
-    }
-    onMounted(() => {
-        getCategoryList()
-    })
+}
+
+onMounted(() => {
+    getCategoryList()
+})
 </script>
