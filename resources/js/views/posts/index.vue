@@ -40,7 +40,7 @@
                 <div v-for="post in posts?.data" :key="post.id" class="col-3">
 
                     <div class="card mb-2" style="width: 24rem;">
-                        <img :src="getImageUrl(post)" width="200" height="200" class="card-img-top" alt="...">
+                        <img :src="getImageUrl(post)" width="250" height="250" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><b>{{ post.title }}</b></h5>
                             <div class="card-text small">On: {{ formatDate(post.created_at) }}</div>
