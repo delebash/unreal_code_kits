@@ -11,9 +11,13 @@ import useAuth from './composables/auth';
 import i18n from "./plugins/i18n";
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'vue-select/dist/vue-select.css';
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { AgGridVue } from "ag-grid-vue3";
 
 const app = createApp({
     created() {
@@ -21,9 +25,8 @@ const app = createApp({
     }
 });
 
-import ExampleComponent from './components/ExampleComponent.vue';
-
-app.component('example-component', ExampleComponent);
+// import ExampleComponent from './components/ExampleComponent.vue';
+// app.component('example-component', ExampleComponent);
 
 
 app.use(router)
@@ -33,4 +36,5 @@ app.use(i18n)
 app.use(abilitiesPlugin, ability)
 app.component("v-select", vSelect);
 app.component('QuillEditor', QuillEditor)
+app.component('AgGridVue', AgGridVue);
 app.mount('#app')

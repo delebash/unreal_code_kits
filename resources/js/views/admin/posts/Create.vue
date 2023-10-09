@@ -22,7 +22,7 @@
                         <!-- Content -->
                         <div class="mb-3">
                             <label for="post-content" class="form-label">
-                                Short Description
+                                Description
                             </label>
                             <textarea v-model="post.content" id="post-content" class="form-control"></textarea>
                             <div class="text-danger mt-1">

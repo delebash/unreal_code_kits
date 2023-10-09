@@ -18,7 +18,7 @@
                     <th class="px-6 py-3 bg-gray-50 text-left">
                         <input v-model="search_content" type="text"
                                class="inline-block mt-1 form-control"
-                               placeholder="Filter by Content">
+                               placeholder="Filter by Description">
                     </th>
                     <th class="px-6 py-3 bg-gray-50 text-left">
                         Order By:

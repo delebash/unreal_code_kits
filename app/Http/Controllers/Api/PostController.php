@@ -67,7 +67,7 @@ class PostController extends Controller
         $post->categories()->attach($category);
 //        try {
         if ($request->hasFile('thumbnail')) {
-            $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('images');
+            $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('thumbnail');
         }
 //        } catch (Exception $e) {
 //            error_log($e->getMessage());
@@ -101,7 +101,7 @@ class PostController extends Controller
 
             if ($request->hasFile('thumbnail')) {
                 error_log('has file');
-                $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('images');
+                $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('thumbnail');
             }
             return new PostResource($post);
         }

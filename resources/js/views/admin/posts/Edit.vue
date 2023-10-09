@@ -22,7 +22,7 @@
                         <!-- Content -->
                         <div class="mb-3">
                             <label for="post-content" class="form-label">
-                                Content
+                                Description
                             </label>
                             <textarea v-model="post.content" id="post-content" class="form-control"></textarea>
                             <div class="text-danger mt-1">
@@ -33,6 +33,10 @@
                                     {{ message }}
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            Details
+                            <quill-editor  toolbar="essential" theme="snow"></quill-editor>
                         </div>
                         <!-- Category -->
                         <div class="mb-3">

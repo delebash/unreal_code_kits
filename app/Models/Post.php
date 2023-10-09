@@ -13,7 +13,7 @@ class Post extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['title', 'content', 'user_id'];
+    protected $fillable = ['title', 'content', 'user_id','details'];
 
 
     public function user()
@@ -31,7 +31,7 @@ class Post extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('images')
+        $this->addMediaCollection('thumbnail')
             ->useFallbackUrl('/images/placeholder.jpg')
             ->useFallbackPath(public_path('/images/placeholder.jpg'))
             ->singleFile();
