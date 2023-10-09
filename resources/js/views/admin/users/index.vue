@@ -76,6 +76,7 @@ const frameworkComponents = {
 const defaultColDef = {
   sortable: true,
   filter: true,
+  resizable: true,
   flex: 1
 };
 
