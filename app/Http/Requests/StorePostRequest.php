@@ -26,7 +26,8 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required',
             'content' => 'required',
-            'categories' => 'required'
+            'versions' => 'required',
+            'details' => 'nullable',
         ];
     }
 }

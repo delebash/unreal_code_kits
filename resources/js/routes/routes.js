@@ -57,6 +57,11 @@ export default [
                 component: () => import('../views/category/posts.vue'),
             },
             {
+                path: 'version/:id',
+                name: 'version-posts.index',
+                component: () => import('../views/version/posts.vue'),
+            },
+            {
                 path: 'login',
                 name: 'auth.login',
                 component: () => import('../views/login/Login.vue'),
@@ -137,6 +142,24 @@ export default [
                 path: 'categories/edit/:id',
                 component: () => import('../views/admin/categories/edit.vue'),
                 meta: { breadCrumb: 'Edit Category' }
+            },
+            {
+                name: 'versions.index',
+                path: 'versions',
+                component: () => import('../views/admin/ueveriosns/index.vue'),
+                meta: { breadCrumb: 'Versions' }
+            },
+            {
+                name: 'versions.create',
+                path: 'versions/create',
+                component: () => import('../views/admin/ueveriosns/create.vue'),
+                meta: { breadCrumb: 'Add new version' }
+            },
+            {
+                name: 'versions.edit',
+                path: 'versions/edit/:id',
+                component: () => import('../views/admin/ueveriosns/edit.vue'),
+                meta: { breadCrumb: 'Edit Version' }
             },
             {
                 name: 'permissions.index',

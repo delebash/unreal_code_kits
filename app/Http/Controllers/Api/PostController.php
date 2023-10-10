@@ -7,6 +7,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Version;
 
 
 class PostController extends Controller
@@ -26,6 +27,12 @@ class PostController extends Controller
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
                     $query->whereIn('id', $categories);
+                }
+            })
+            ->whereHas('versions', function ($query) {
+                if (request('search_version')) {
+                    $versions = explode(",", request('search_version'));
+                    $query->whereIn('id', $versions);
                 }
             })
             ->when(request('search_id'), function ($query) {
@@ -63,8 +70,11 @@ class PostController extends Controller
         $post = Post::create($validatedData);
 
         $categories = explode(",", $request->categories);
+        $versions = explode(",", $request->versions);
         $category = Category::findMany($categories);
+        $version = Version::findMany($versions);
         $post->categories()->attach($category);
+        $post->versions()->attach($version);
 //        try {
         if ($request->hasFile('thumbnail')) {
             $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('thumbnail');
@@ -97,7 +107,9 @@ class PostController extends Controller
             $post->update($request->validated());
 
             $category = Category::findMany($request->categories);
+            $version = Version::findMany($request->versions);
             $post->categories()->sync($category);
+            $post->versions()->sync($version);
 
             if ($request->hasFile('thumbnail')) {
                 error_log('has file');
@@ -128,11 +140,17 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('categories', 'user', 'media')
+        $posts = Post::with('categories', 'user', 'media','versions')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
                     $query->whereIn('categories.id', $categories);
+                }
+            })
+            ->whereHas('versions', function ($query) {
+                if (request('search_version')) {
+                    $versions = explode(",", request('search_version'));
+                    $query->whereIn('versions.id', $versions);
                 }
             })
             ->when(request('search_id'), function ($query) {
@@ -167,11 +185,17 @@ class PostController extends Controller
 
         return PostResource::collection($posts);
     }
+    public function getVersionByPosts($id)
+    {
+        $posts = Post::whereRelation('versions', 'version_id', '=', $id)->paginate();
+
+        return PostResource::collection($posts);
+    }
 
     public function getPost($id)
     {
 
-        $post = Post::with('categories', 'user', 'media')->findOrFail($id);
+        $post = Post::with('categories', 'user', 'media','versions')->findOrFail($id);
         return new PostResource($post);
     }
 }

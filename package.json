@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Unreal Code Kits, complete pieces of code to add to your Unreal Engine project",
     "author": "Daniel Elebash",
-    "license": "ISC",
+    "license": "MIT",
     "scripts": {
         "start": "vite",
         "build": "vite build"
@@ -16,17 +16,18 @@
         "laravel-vite-plugin": "^0.8.1",
         "lodash": "^4.17.21",
         "postcss": "^8.4.31",
-        "sass": "^1.69.0",
+        "sass": "^1.69.1",
         "vite": "^4.4.11",
         "vue": "^3.3.4"
     },
     "dependencies": {
         "@casl/ability": "^6.5.0",
         "@casl/vue": "^2.2.1",
+        "@ckeditor/ckeditor5-vue": "^5.1.0",
         "@fortawesome/fontawesome-free": "^6.4.2",
-        "@vueup/vue-quill": "^1.2.0",
         "ag-grid-community": "^30.2.0",
         "ag-grid-vue3": "^30.2.0",
+        "ckeditor5-custom-build": "file:ckeditor5",
         "dayjs": "^1.11.10",
         "js-cookie": "^3.0.5",
         "laravel-vue-pagination": "^4.1.1",

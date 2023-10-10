@@ -7,7 +7,8 @@ export default function usePosts() {
         title: '',
         content: '',
         category_id: '',
-        thumbnail: ''
+        thumbnail: '',
+        details: ''
     })
     const router = useRouter()
     const validationErrors = ref({})

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Version;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -35,6 +36,14 @@ class CreateAdminUserSeeder extends Seeder
         $role2->syncPermissions($permissions);
         Category::create(['name' => 'material']);
         Category::create(['name' => 'landscape']);
+
+        Version::create(['name' => '4.6']);
+        Version::create(['name' => '4.7']);
+        Version::create(['name' => '5.0']);
+        Version::create(['name' => '5.1']);
+        Version::create(['name' => '5.2']);
+        Version::create(['name' => '5.3']);
+        Version::create(['name' => '5.4']);
 
         $permissions = Permission::pluck('id','id')->all();
 

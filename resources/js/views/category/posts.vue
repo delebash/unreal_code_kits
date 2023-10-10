@@ -25,7 +25,6 @@
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
                                      class="btn btn-primary">View
                         </router-link>
-                        <a href="#" class="btn btn-success m-2">Download</a>
                     </div>
                 </div>
             </div>

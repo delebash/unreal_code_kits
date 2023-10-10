@@ -29,6 +29,10 @@ class Post extends Model implements HasMedia
         return $this->belongsToMany(Category::class, 'category_post');
     }
 
+    public function versions()
+    {
+        return $this->belongsToMany(Version::class, 'version_post');
+    }
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('thumbnail')

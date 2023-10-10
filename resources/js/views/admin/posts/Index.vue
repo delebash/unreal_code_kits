@@ -47,6 +47,7 @@ import GridActions from "@/components/agGrid/GridActions.vue";
 const router = useRouter()
 
 const search_category = ref('')
+const search_version = ref('')
 const search_id = ref('')
 const search_title = ref('')
 const search_content = ref('')
@@ -64,7 +65,6 @@ onBeforeMount(() => {
 })
 onMounted(() => {
   getPosts()
-  // getCategoryList()
 })
 
 
@@ -148,6 +148,23 @@ const columnDefs = reactive({
       }
     },
     {
+      headerName: "UE Versions",
+      filter: "agMultiColumnFilter",
+      cellStyle: {'white-space': 'normal'},
+      autoHeight: true,
+      icons: {
+        menu: '<i class="fa-solid fa-filter"></i>',
+      },
+      field: "versions", valueGetter: params => {
+        let value = ""
+        for (let version of params.data.versions) {
+          value = value + version.name + ", "
+        }
+        value = value.slice(0, -2);
+        return value;
+      }
+    },
+    {
       headerName: 'Actions',
       icons: {
         menu: '<i class="fa-solid fa-filter"></i>',
@@ -167,7 +184,8 @@ const onFilterTextBoxChanged = () => {
       document.getElementById('filter-text-box').value
   );
 };
-function deleteItem(id){
+
+function deleteItem(id) {
   deletePost(id)
 }
 
@@ -182,6 +200,7 @@ const updateOrdering = (column) => {
   getPosts(
       1,
       search_category.value,
+      search_version.value,
       search_id.value,
       search_title.value,
       search_content.value,
@@ -204,6 +223,7 @@ watch(search_id, (current, previous) => {
   getPosts(
       1,
       search_category.value,
+      search_version.value,
       current,
       search_title.value,
       search_content.value,
@@ -214,6 +234,7 @@ watch(search_title, (current, previous) => {
   getPosts(
       1,
       search_category.value,
+      search_version.value,
       search_id.value,
       current,
       search_content.value,
@@ -224,6 +245,7 @@ watch(search_content, (current, previous) => {
   getPosts(
       1,
       search_category.value,
+      search_version.value,
       search_id.value,
       search_title.value,
       current,
@@ -234,6 +256,7 @@ watch(search_global, _.debounce((current, previous) => {
   getPosts(
       1,
       search_category.value,
+      search_version.value,
       search_id.value,
       search_title.value,
       search_content.value,
@@ -242,155 +265,4 @@ watch(search_global, _.debounce((current, previous) => {
 }, 200))
 
 
-
 </script>
-<!--                    <div class="table-responsive mb-4">-->
-<!--                        <table class="table" style="position: absolute; z-index: 30">-->
-<!--                            <thead>-->
-<!--                            <tr>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <input v-model="search_id" type="text"-->
-<!--                                           class="inline-block mt-1 form-control"-->
-<!--                                           placeholder="Filter by ID">-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <input v-model="search_title" type="text"-->
-<!--                                           class="inline-block mt-1 form-control"-->
-<!--                                           placeholder="Filter by Title">-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <v-select multiple v-model="search_category" :options="categoryList"-->
-<!--                                              :reduce="category => category.id" label="name"-->
-<!--                                              class="form-control w-10"/>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <input v-model="search_content" type="text"-->
-<!--                                           class="inline-block mt-1 form-control"-->
-<!--                                           placeholder="Filter by Content">-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 text-start"></th>-->
-<!--                                <th class="px-6 py-3 text-start"></th>-->
-<!--                            </tr>-->
-<!--                            </thead>-->
-<!--                        </table>-->
-<!--                    </div>-->
-
-<!--                    <div class="table-responsive">-->
-<!--                        <table class="table">-->
-<!--                            <thead>-->
-<!--                            <tr>-->
-<!--                                <th class="px-6 py-3 text-start">-->
-<!--                                    <div class="flex flex-row"-->
-<!--                                         @click="updateOrdering('id')">-->
-<!--                                        <div class="font-medium text-uppercase"-->
-<!--                                             :class="{ 'font-bold text-blue-600': orderColumn === 'id' }">-->
-<!--                                            ID-->
-<!--                                        </div>-->
-<!--                                        <div class="select-none">-->
-<!--                                <span :class="{-->
-<!--                                  'text-blue-600': orderDirection === 'asc' && orderColumn === 'id',-->
-<!--                                  'hidden': orderDirection !== '' && orderDirection !== 'asc' && orderColumn === 'id',-->
-<!--                                }">&uarr;</span>-->
-<!--                                            <span :class="{-->
-<!--                                  'text-blue-600': orderDirection === 'desc' && orderColumn === 'id',-->
-<!--                                  'hidden': orderDirection !== '' && orderDirection !== 'desc' && orderColumn === 'id',-->
-<!--                                }">&darr;</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 text-left">-->
-<!--                                    <div class="flex flex-row"-->
-<!--                                         @click="updateOrdering('title')">-->
-<!--                                        <div class="font-medium text-uppercase"-->
-<!--                                             :class="{ 'font-bold text-blue-600': orderColumn === 'title' }">-->
-<!--                                            Title-->
-<!--                                        </div>-->
-<!--                                        <div class="select-none">-->
-<!--                                <span :class="{-->
-<!--                                  'text-blue-600': orderDirection === 'asc' && orderColumn === 'title',-->
-<!--                                  'hidden': orderDirection !== '' && orderDirection !== 'asc' && orderColumn === 'title',-->
-<!--                                }">&uarr;</span>-->
-<!--                                            <span :class="{-->
-<!--                                  'text-blue-600': orderDirection === 'desc' && orderColumn === 'title',-->
-<!--                                  'hidden': orderDirection !== '' && orderDirection !== 'desc' && orderColumn === 'title',-->
-<!--                                }">&darr;</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 text-left">-->
-<!--                                    <div class="flex flex-row">-->
-<!--                                        <div class="font-medium text-uppercase">-->
-<!--                                            Thumbnail-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Category</span>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Content</span>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    <div class="flex flex-row items-center justify-between cursor-pointer"-->
-<!--                                         @click="updateOrdering('created_at')">-->
-<!--                                        <div class="leading-4 font-medium text-gray-500 uppercase tracking-wider"-->
-<!--                                             :class="{ 'font-bold text-blue-600': orderColumn === 'created_at' }">-->
-<!--                                            Created at-->
-<!--                                        </div>-->
-<!--                                        <div class="select-none">-->
-<!--                                <span :class="{-->
-<!--                                  'text-blue-600': orderDirection === 'asc' && orderColumn === 'created_at',-->
-<!--                                  'hidden': orderDirection !== '' && orderDirection !== 'asc' && orderColumn === 'created_at',-->
-<!--                                }">&uarr;</span>-->
-<!--                                            <span :class="{-->
-<!--                                  'text-blue-600': orderDirection === 'desc' && orderColumn === 'created_at',-->
-<!--                                  'hidden': orderDirection !== '' && orderDirection !== 'desc' && orderColumn === 'created_at',-->
-<!--                                }">&darr;</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </th>-->
-<!--                                <th class="px-6 py-3 bg-gray-50 text-left">-->
-<!--                                    Actions-->
-<!--                                </th>-->
-<!--                            </tr>-->
-<!--                            </thead>-->
-<!--                            <tbody>-->
-<!--                            <tr v-for="post in posts.data" :key="post.id">-->
-<!--                                <td class="px-6 py-4 text-sm" width="20">-->
-<!--                                    {{ post.id }}-->
-<!--                                </td>-->
-<!--                                <td class="px-6 py-4 text-sm">-->
-<!--                                    {{ post.title }}-->
-<!--                                </td>-->
-<!--                                <td class="px-6 py-4 text-sm">-->
-<!--                                    <img v-if="post.image" :src="getImageUrl(post)" alt="image" height="70">-->
-<!--                                </td>-->
-<!--                                <td class="px-6 py-4 text-sm">-->
-<!--                                    <div v-for="category in post.categories">-->
-<!--                                        {{ category.name }}-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                                <td class="px-6 py-4 text-sm">-->
-<!--                                    {{ post.content }}-->
-<!--                                </td>-->
-<!--                                <td class="px-6 py-4 text-sm">-->
-<!--                                    {{ post.created_at }}-->
-<!--                                </td>-->
-<!--                                <td class="px-6 py-4 text-sm">-->
-<!--                                                        <router-link v-if="can('post-edit')"-->
-<!--                                                                     :to="{ name: 'posts.edit', params: { id: 1 } }"-->
-<!--                                                                     class="badge bg-primary">Edit-->
-<!--                                                        </router-link>-->
-<!--                                    <a href="#" v-if="can('post-delete')" @click.prevent="deletePost(post.id)"-->
-<!--                                       class="ms-2 badge bg-danger">Delete</a>-->
-<!--                                </td>-->
-<!--                            </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="card-footer">-->
-<!--                    <Pagination :data="posts" :limit="3"-->
-<!--                                @pagination-change-page="page => getPosts(page, search_category, search_id, search_title, search_content, search_global, orderColumn, orderDirection)"-->
-<!--                                class="mt-4"/>-->
-<!--                  <GridActions></GridActions>-->
