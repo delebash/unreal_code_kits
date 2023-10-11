@@ -4,6 +4,8 @@
     "description": "Unreal Code Kits",
     "keywords": ["spa", "laravel", "vue"],
     "license": "MIT",
+    "author": "Daniel Elebash",
+    "homepage": "https://unrealcodekits.justgeektechs.com/",
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
@@ -65,11 +67,5 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "author": "",
-    "createAt": "",
-    "homepage": "",
-    "identifier": "",
-    "meta": {},
-    "schemaVersion": 0
+    "prefer-stable": true
 }
