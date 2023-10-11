@@ -73,7 +73,6 @@ export default function usePosts() {
 
     const storePost = async (post) => {
         if (isLoading.value) return;
-
         isLoading.value = true
         validationErrors.value = {}
 
@@ -105,6 +104,12 @@ export default function usePosts() {
     }
 
     const updatePost = async (post) => {
+        if (post.categories[0].id){
+            post.categories = post.categories.map(a => a.id);
+        }
+        if (post.versions[0].id){
+            post.versions = post.versions.map(a => a.id)
+        }
         if (isLoading.value) return;
         isLoading.value = true
         validationErrors.value = {}

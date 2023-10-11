@@ -157,6 +157,5 @@ function submitForm() {
 onMounted(() => {
   getCategoryList()
   getVersionList()
-  console.log(versions)
 })
 </script>
