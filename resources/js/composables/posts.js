@@ -7,6 +7,7 @@ export default function usePosts() {
         title: '',
         content: '',
         category_id: '',
+        version_id: '',
         thumbnail: '',
         details: ''
     })
@@ -18,6 +19,7 @@ export default function usePosts() {
     const getPosts = async (
         page = 1,
         search_category = '',
+        search_version = '',
         search_id = '',
         search_title = '',
         search_content = '',
@@ -27,6 +29,7 @@ export default function usePosts() {
     ) => {
         axios.get('/api/posts?page=' + page +
             '&search_category=' + search_category +
+            '&search_version=' + search_version +
             '&search_id=' + search_id +
             '&search_title=' + search_title +
             '&search_content=' + search_content +
@@ -41,6 +44,7 @@ export default function usePosts() {
     const getDisplayPosts = async (
         page = 1,
         search_category = '',
+        search_version = '',
         search_id = '',
         search_title = '',
         search_content = '',
@@ -49,8 +53,13 @@ export default function usePosts() {
         order_column = 'created_at',
         order_direction = 'desc'
     ) => {
+        console.log('search_category')
+        console.log(search_category)
+        console.log('search_version')
+        console.log(search_version)
         axios.get('/api/get-posts?page=' + page +
             '&search_category=' + search_category +
+            '&search_version=' + search_version +
             '&search_id=' + search_id +
             '&search_title=' + search_title +
             '&search_content=' + search_content +
@@ -104,10 +113,10 @@ export default function usePosts() {
     }
 
     const updatePost = async (post) => {
-        if (post.categories[0].id){
+        if (post.categories[0].id) {
             post.categories = post.categories.map(a => a.id);
         }
-        if (post.versions[0].id){
+        if (post.versions[0].id) {
             post.versions = post.versions.map(a => a.id)
         }
         if (isLoading.value) return;

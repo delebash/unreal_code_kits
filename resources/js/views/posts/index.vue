@@ -83,7 +83,6 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import {ref, onMounted, watch} from 'vue'
 import usePosts from "@/composables/posts";
 import _ from "lodash";
@@ -148,6 +147,7 @@ watch(search_category, (current, previous) => {
   getDisplayPosts(
       1,
       current,
+      search_version.value,
       search_id.value,
       search_title.value,
       search_content.value,
@@ -157,6 +157,7 @@ watch(search_category, (current, previous) => {
 watch(search_version, (current, previous) => {
   getDisplayPosts(
       1,
+      search_category.value,
       current,
       search_id.value,
       search_title.value,

@@ -213,11 +213,23 @@ watch(search_category, (current, previous) => {
   getPosts(
       1,
       current,
+      search_version.value,
       search_id.value,
       search_title.value,
       search_content.value,
       search_global.value
   )
+})
+watch(search_version, (current, previous) => {
+    getPosts(
+        1,
+        search_category.value,
+        current,
+        search_id.value,
+        search_title.value,
+        search_content.value,
+        search_global.value
+    )
 })
 watch(search_id, (current, previous) => {
   getPosts(
