@@ -53,10 +53,7 @@ export default function usePosts() {
         order_column = 'created_at',
         order_direction = 'desc'
     ) => {
-        console.log('search_category')
-        console.log(search_category)
-        console.log('search_version')
-        console.log(search_version)
+
         axios.get('/api/get-posts?page=' + page +
             '&search_category=' + search_category +
             '&search_version=' + search_version +
