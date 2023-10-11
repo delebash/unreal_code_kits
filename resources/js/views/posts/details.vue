@@ -23,6 +23,17 @@
         <article class="blog-post mb-2" style="overflow: auto; max-height:400px; min-height:100px;">
           <div id="preview" v-html="post?.details"></div>
         </article>
+          <div>
+              <textarea v-model="review" id="post-content" class="form-control"></textarea>
+          </div>
+          <div v-if="post?.reviews">
+              <div v-for="content in post.reviews">
+                  <textarea v-model="review" id="post-content" class="form-control">{{content}}</textarea>
+              <div><button class="btn btn-primary" @click="saveReview"></button></div>
+              </div>
+
+          </div>
+
       </div>
 
       <div class="col-md-2">
@@ -64,7 +75,7 @@ const post = ref();
 const categories = ref();
 const versions = ref();
 const route = useRoute()
-
+const review = ref('')
 onMounted(() => {
   axios.get('/api/get-post/' + route.params.id).then(({data}) => {
     post.value = data.data
@@ -76,7 +87,11 @@ onMounted(() => {
     versions.value = data.data
   })
 })
-
+function saveReview(){
+    axios.post('/api/version-list').then(({data}) => {
+        console.log(data.data)
+    })
+}
 function formatDate(dateString) {
   const date = dayjs(dateString);
   // Then specify how you want your dates to be formatted

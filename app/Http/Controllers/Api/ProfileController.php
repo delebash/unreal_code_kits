@@ -24,7 +24,6 @@ class ProfileController extends Controller
             try {
                 if ($request->hasFile('avatar')) {
                     $profile->addMediaFromRequest('avatar')->preservingOriginal()->toMediaCollection('avatars');
-                    error_log('success');
                 }
             } catch (Exception $e) {
                 error_log($e->getMessage());

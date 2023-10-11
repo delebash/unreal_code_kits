@@ -22,7 +22,7 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('media')
+        $posts = Post::with('media','reviews')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
@@ -62,7 +62,6 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-
         $this->authorize('post-create');
 
         $validatedData = $request->validated();
@@ -97,7 +96,6 @@ class PostController extends Controller
 
     public function update($id, StorePostRequest $request)
     {
-
         $this->authorize('post-edit');
         $post = Post::findOrFail($id);
 
@@ -112,7 +110,6 @@ class PostController extends Controller
             $post->versions()->sync($version);
 
             if ($request->hasFile('thumbnail')) {
-                error_log('has file');
                 $post->addMediaFromRequest('thumbnail')->preservingOriginal()->toMediaCollection('thumbnail');
             }
             return new PostResource($post);
@@ -195,7 +192,7 @@ class PostController extends Controller
     public function getPost($id)
     {
 
-        $post = Post::with('categories', 'user', 'media','versions')->findOrFail($id);
+        $post = Post::with('categories', 'user', 'media','versions','reviews')->findOrFail($id);
         return new PostResource($post);
     }
 }

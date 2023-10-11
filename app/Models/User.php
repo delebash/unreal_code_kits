@@ -71,4 +71,18 @@ class User extends Authenticatable implements HasMedia
     {
         $this->notify(new UserResetPasswordNotification($token));
     }
+    /**
+     * Get the products the user has added.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    /**
+     * Get the reviews the user has made.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

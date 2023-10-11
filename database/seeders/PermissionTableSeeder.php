@@ -40,7 +40,11 @@ class PermissionTableSeeder extends Seeder
             'version-list',
             'version-create',
             'version-edit',
-            'version-delete'
+            'version-delete',
+            'review-list',
+            'review-create',
+            'review-edit',
+            'review-delete'
         ];
 
         foreach ($permissions as $permission) {
