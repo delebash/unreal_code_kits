@@ -18,13 +18,14 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 Route::post('forget-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('forget.password.post');
 Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('versions', VersionController::class);
-    Route::apiResource('post/{post}/reviews', ReviewController::class);
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('reviews', ReviewController::class);
+    Route::post('posts/{post}/reviews', [ReviewController::class, 'save']);
     Route::get('role-list', [RoleController::class, 'getList']);
     Route::get('role-permissions/{id}', [PermissionController::class, 'getRolePermissions']);
     Route::put('/role-permissions', [PermissionController::class, 'updateRolePermissions']);
@@ -33,12 +34,12 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('version-list', [VersionController::class, 'getList']);
     Route::get('/user', [ProfileController::class, 'user']);
     Route::post('update-posts/{id}', [PostController::class, 'update']);
-
+    Route::get('get-review/{id}', [ReviewController::class, 'getReview']);
     //php doesn't recognize miltipart form except using post method so when we
     //want to update we still use post method -- really still a prob in 2023
     Route::post('/profile', [ProfileController::class, 'update']);
 
-    Route::get('abilities', function(Request $request) {
+    Route::get('abilities', function (Request $request) {
         return $request->user()->roles()->with('permissions')
             ->get()
             ->pluck('permissions')
@@ -54,6 +55,7 @@ Route::get('category-list', [CategoryController::class, 'getList']);
 Route::get('version-list', [VersionController::class, 'getList']);
 Route::get('get-posts', [PostController::class, 'getPosts']);
 Route::get('get-category-posts/{id}', [PostController::class, 'getCategoryByPosts']);
+Route::get('get-user-posts/{id}', [PostController::class, 'getPostsByUser']);
 Route::get('get-version-posts/{id}', [PostController::class, 'getVersionByPosts']);
 Route::get('get-post/{id}', [PostController::class, 'getPost']);
 

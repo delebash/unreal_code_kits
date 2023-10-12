@@ -44,7 +44,8 @@ class PermissionTableSeeder extends Seeder
             'review-list',
             'review-create',
             'review-edit',
-            'review-delete'
+            'review-delete',
+            'review-all'
         ];
 
         foreach ($permissions as $permission) {

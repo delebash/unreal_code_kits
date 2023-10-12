@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="text-center my-4">Code Kits By Category</h2>
+        <h2 class="text-center my-4">Code Kits By User</h2>
 
         <div class="row">
             <div v-for="post in posts?.data" :key="post.id" class="col-sm-3">
@@ -27,9 +27,9 @@
                                     {{ category.name }}
                                 </router-link>
                             </strong>
-                            Versions:
+                            Unreal Versions:
                             <strong class="" v-for="version in post.versions" :key="version.id">
-                                <router-link :to="{ name: 'version-posts.index', params: { id: version?.id } }">
+                                <router-link :to="{ name: 'version-posts.index', params: { id: version.id } }">
                                     {{ version.name }}
                                 </router-link>
                             </strong>
@@ -51,7 +51,8 @@ import axios from 'axios';
 import {ref, onMounted} from 'vue'
 import {useRoute} from "vue-router";
 import dayjs from "dayjs";
-import StarRating from "vue-star-rating";
+import StarRating from 'vue-star-rating'
+
 const route = useRoute();
 const posts = ref();
 const review = ref('')
@@ -72,7 +73,7 @@ function getImageUrl(post) {
 }
 
 onMounted(() => {
-    axios.get('/api/get-user-posts/' + route.params.id).then(({data}) => {
+    axios.get('/api/get-category-posts/' + route.params.id).then(({data}) => {
         posts.value = data;
     })
 })

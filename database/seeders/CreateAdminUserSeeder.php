@@ -31,7 +31,14 @@ class CreateAdminUserSeeder extends Seeder
             'post-list',
             'post-create',
             'post-edit',
-            'post-delete'
+            'post-delete',
+            'review-list',
+            'review-create',
+            'review-edit',
+            'review-delete',
+            'category-list',
+            'category-create',
+
             ];
         $role2->syncPermissions($permissions);
         Category::create(['name' => 'material']);

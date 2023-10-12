@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->text('review');
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

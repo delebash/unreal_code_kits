@@ -49,12 +49,17 @@
             <img :src="getImageUrl(post)" width="250" height="250" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><b>{{ post.title }}</b></h5>
-              <div class="card-text small">On: {{ formatDate(post.created_at) }}</div>
-              <div class="card-text small mb-1">By: <a href="#"
-                                                       @click.prevent="getUserPosts(post?.user?.id)">{{
-                  post?.user?.name
-                }}</a></div>
-              <p class="card-text">{{ post.content.substring(0, 100) + "..." }}</p>
+                <div class="blog-post-meta m-1">Posted: {{ formatDate(post?.created_at) }}
+                    <router-link :to="{ name: 'user-posts.index', params: { id: post?.id } }">
+                        By: {{ post?.user?.name }}
+                    </router-link>
+                    <span>
+                        -- Average Rating:
+                      <star-rating :inline=true :star-size=25 :read-only=true :increment=0.5
+                                   :rating="post?.average_rating"></star-rating>
+                    </span>
+                </div>
+                <p class="card-text">{{ post.content.substring(0, 100) + "..." }}</p>
               <p class="card-text">
                 Categories:
                 <strong class="m-1" v-for="category in post.categories" :key="category.id">
@@ -62,8 +67,6 @@
                     {{ category.name }}
                   </router-link>
                 </strong>
-              </p>
-              <p class="card-text">
                 Unreal Versions:
                 <strong class="m-1" v-for="version in post.versions" :key="version.id">
                   <router-link :to="{ name: 'version-posts.index', params: { id: version.id } }">
@@ -71,7 +74,7 @@
                   </router-link>
                 </strong>
               </p>
-              <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
+              <router-link :to="{ name: 'public-posts.details', params: { id: post.id }}"
                            class="btn btn-primary">View
               </router-link>
             </div>
@@ -89,7 +92,9 @@ import _ from "lodash";
 import useCategories from "@/composables/categories";
 import useVersions from "@/composables/versions";
 import dayjs from "dayjs";
+import StarRating from 'vue-star-rating'
 
+const review = ref('')
 const search_category = ref('')
 const search_version = ref('')
 const search_id = ref('')

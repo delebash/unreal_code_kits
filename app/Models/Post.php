@@ -21,7 +21,7 @@ class Post extends Model implements HasMedia
      */
     public function reviews()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Review::class)->with('user');
     }
 
     public function user()

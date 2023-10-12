@@ -185,10 +185,14 @@ class PostController extends Controller
     public function getVersionByPosts($id)
     {
         $posts = Post::whereRelation('versions', 'version_id', '=', $id)->paginate();
-
         return PostResource::collection($posts);
     }
 
+    public function getPostsByUser($id)
+    {
+        $posts = Post::whereRelation('user', 'user_id', '=', $id)->paginate();
+        return PostResource::collection($posts);
+    }
     public function getPost($id)
     {
 

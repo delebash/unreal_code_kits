@@ -57,6 +57,11 @@ export default [
                 component: () => import('../views/category/posts.vue'),
             },
             {
+                path: 'user/:id',
+                name: 'user-posts.index',
+                component: () => import('../views/user/posts.vue'),
+            },
+            {
                 path: 'version/:id',
                 name: 'version-posts.index',
                 component: () => import('../views/version/posts.vue'),
@@ -124,6 +129,18 @@ export default [
                 path: 'posts/edit/:id',
                 component: PostsEdit,
                 meta: { breadCrumb: 'Edit post' }
+            },
+            {
+                name: 'review.create',
+                path: 'review/create/:id',
+                component: () => import('../views/admin/reviews/create.vue'),
+                meta: { breadCrumb: 'Add new review' }
+            },
+            {
+                name: 'review.edit',
+                path: 'review/edit/:id',
+                component: () => import('../views/admin/reviews/edit.vue'),
+                meta: { breadCrumb: 'Edit review' }
             },
             {
                 name: 'categories.index',

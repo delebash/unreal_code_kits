@@ -9,23 +9,36 @@
                     <img :src="getImageUrl(post)" width="200" height="200" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <div class="card-text small">On: {{ formatDate(post.created_at) }}</div>
-                        <div class="card-text small mb-1">By: {{ post?.user?.name }}</div>
+                        <div class="blog-post-meta m-1">Posted: {{ formatDate(post?.created_at) }}
+                            <router-link :to="{ name: 'user-posts.index', params: { id: post?.id } }">
+                                By: {{ post?.user?.name }}
+                            </router-link>
+                            <span>
+                        -- Average Rating:
+                      <star-rating :inline=true :star-size=25 :read-only=true :increment=0.5
+                                   :rating="post?.average_rating"></star-rating>
+                    </span>
+                        </div>
+
+
                         <p class="card-text">{{ post.content.substring(0, 100) + "..." }}</p>
                         <p class="card-text">
+                            Categories:
+                            <strong class="" v-for="category in post.categories" :key="category.id">
+                                <router-link :to="{ name: 'category-posts.index', params: { id: category?.id } }">
+                                    {{ category.name }}
+                                </router-link>
+                            </strong>
                             Versions:
-
-                            <strong class="m-1" v-for="version in post.versions" :key="version.id">
-                                <a :href="$router.resolve({name:'version-posts.index', params: {id: version.id}}).href">
-                                    {{version.name}}
-
-                                </a>
+                            <strong class="" v-for="version in post.versions" :key="version.id">
+                                <router-link :to="{ name: 'version-posts.index', params: { id: version.id } }">
+                                    {{ version.name }}
+                                </router-link>
                             </strong>
                         </p>
                         <router-link :to="{ name: 'public-posts.details', params: { id: post.id } }"
                                      class="btn btn-primary">View
                         </router-link>
-                        <a href="#" class="btn btn-success m-2">Download</a>
                     </div>
                 </div>
             </div>
@@ -43,6 +56,9 @@ import dayjs from "dayjs";
 
 const route = useRoute();
 const posts = ref();
+import StarRating from 'vue-star-rating'
+
+const review = ref('')
 
 function formatDate(dateString) {
     const date = dayjs(dateString);

@@ -8,8 +8,11 @@ use App\Http\Requests\UpdateReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
+
 class ReviewController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -19,11 +22,26 @@ class ReviewController extends Controller
         return ReviewResource::collection($review);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return ReviewResource
+     */
+    public function show(Review $review)
+    {
+        $this->authorize('review-edit');
+        if ($review->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('review-all')) {
+            return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own reviews']);
+        } else {
+            return new ReviewResource($review);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReviewRequest $request, Post $post)
+    public function save(StoreReviewRequest $request, Post $post)
     {
 
         $this->authorize('review-create');
@@ -39,40 +57,32 @@ class ReviewController extends Controller
         return response()->json(['message' => 'Review Added', 'review' => $review]);
 
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Review $review)
-    {
-        $this->authorize('review-edit');
-        if ($review->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('review-all')) {
-            return response()->json(['status' => 405, 'success' => false, 'message' => 'You can only edit your own reviews']);
-        } else {
-            return new ReviewResource($review);
-        }
-    }
-
     /**
      * Update the specified resource in storage.
+     *
+     * @param Review $review
+     * @param StoreReviewRequest $request
+     * @return JsonResponse|ReviewResource
+     * @throws AuthorizationException
      */
-    public function update(UpdateReviewRequest $request, Review $review)
+    public function update(Review $review, StoreReviewRequest $request)
     {
+        error_log('test');
         $this->authorize('review-edit');
-        if (auth()->user()->id !== $review->user_id) {
+        if ($review->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('review-all')) {
             return response()->json(['message' => 'Action Forbidden']);
         }
         $request->validate([
-            'review' => 'required|string',
-            'rating' => 'required|numeric|min:0|max:5',
+            'review' => 'required|string'
         ]);
-
         $review->review = $request->review;
         $review->rating = $request->rating;
-        $review->save();
 
-        return response()->json(['message' => 'Review Updated', 'review' => $review]);
+        if ($review->save()) {
+            return new ReviewResource($review);
+        }
 
+        return response()->json(['status' => 405, 'success' => false]);
     }
 
     /**
@@ -81,10 +91,17 @@ class ReviewController extends Controller
     public function destroy(Review $review)
     {
         $this->authorize('review-delete');
-        if (auth()->user()->id !== $review->user_id) {
+        if ($review->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('review-all')) {
             return response()->json(['message' => 'Action Forbidden']);
         }
         $review->delete();
         return response()->json(null, 204);
+    }
+
+    public function getReview($id)
+    {
+
+        $review = Review::with('user')->findOrFail($id);
+        return new ReviewResource($review);
     }
 }
