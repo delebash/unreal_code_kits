@@ -9,6 +9,7 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <!-- <li class="nav-item">
@@ -16,15 +17,23 @@
                             Posts
                         </router-link>
                     </li> -->
-<!--                    <LocaleSwitcher />-->
+                    <!--                    <LocaleSwitcher />-->
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             <img v-if="user.avatar" :src="getImageUrl(user)" alt="Avatar" class="avatar"/>
                             Hi, {{ user.name }}
                         </a>
+
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
-                            <li><router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link></li>
+                            <li>
+                                <router-link :to="{ name : 'public-posts.index'}" class="nav-link">Browse</router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'profile.index' }" class="dropdown-item">Profile</router-link>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -40,13 +49,14 @@
 
 <script setup>
 import {computed} from "vue";
-import { useStore } from 'vuex';
+import {useStore} from 'vuex';
 import useAuth from "@/composables/auth";
 import LocaleSwitcher from "../../components/LocaleSwitcher.vue";
 
-    const store = useStore();
-    const user = computed(() => store.state.auth.user)
-    const {processing, logout} = useAuth();
+const store = useStore();
+const user = computed(() => store.state.auth.user)
+const {processing, logout} = useAuth();
+
 function getImageUrl(user) {
     let avatar
     avatar = user.avatar
