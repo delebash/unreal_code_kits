@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card border-0 shadow-sm">
                 <div v-if="content.value" class="card-body">
-                    <star-rating :inline=true :star-size=25 :read-only=false :increment=0.5
+                    <star-rating :inline=true :star-size=25 :read-only=false :increment=1
                                  v-model:rating="content.value.ratings"></star-rating>
                     <textarea class="form-control mt-2" style="min-height: 300px" v-model="content.value.review"/>
                     <div class="text-danger mt-1">
