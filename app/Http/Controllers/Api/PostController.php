@@ -205,8 +205,7 @@ class PostController extends Controller
 
     public function getPost($id)
     {
-
-        $post = Post::with('categories', 'user', 'media', 'versions', 'reviews')->findOrFail($id);
+        $post = Post::withAvg('reviews', 'rating')->findOrFail($id);
         return new PostResource($post);
     }
 }
