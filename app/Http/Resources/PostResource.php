@@ -30,10 +30,10 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'categories' => $this->categories()->select('id', 'name')->get(),
             'versions' => $this->versions()->select('id', 'name')->get(),
-            'average_rating'=>$this->reviews->avg('rating'),
             'content' => $this->content,
             'reviews' => $this->reviews,
             'details' => $this->details,
+            'average_rating' => floatval($this->reviews_avg_rating),
             'image' => $image,
             'user' => $this->user,
             'created_at' => $this->created_at->toDateString()

@@ -22,7 +22,7 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('media','reviews')
+        $posts = Post::with('media', 'reviews')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
@@ -129,6 +129,9 @@ class PostController extends Controller
 
     public function getPosts()
     {
+
+        $posts = null;
+
         $orderColumn = request('order_column', 'created_at');
         if (!in_array($orderColumn, ['id', 'title', 'created_at'])) {
             $orderColumn = 'created_at';
@@ -137,7 +140,8 @@ class PostController extends Controller
         if (!in_array($orderDirection, ['asc', 'desc'])) {
             $orderDirection = 'desc';
         }
-        $posts = Post::with('categories', 'user', 'media','versions')
+
+        $posts = Post::withAvg('reviews', 'rating')
             ->whereHas('categories', function ($query) {
                 if (request('search_category')) {
                     $categories = explode(",", request('search_category'));
@@ -172,7 +176,11 @@ class PostController extends Controller
             })
             ->orderBy($orderColumn, $orderDirection)
             ->latest()
-            ->paginate(50);
+            ->paginate(50);;
+        if (request('search_rating')) {
+            $posts = $posts->where('reviews_avg_rating', '>=', request('search_rating'))->where('reviews_avg_rating', '<=', (request('search_rating') + 1));
+        }
+
         return PostResource::collection($posts);
     }
 
@@ -182,6 +190,7 @@ class PostController extends Controller
 
         return PostResource::collection($posts);
     }
+
     public function getVersionByPosts($id)
     {
         $posts = Post::whereRelation('versions', 'version_id', '=', $id)->paginate();
@@ -193,10 +202,11 @@ class PostController extends Controller
         $posts = Post::whereRelation('user', 'user_id', '=', $id)->paginate();
         return PostResource::collection($posts);
     }
+
     public function getPost($id)
     {
 
-        $post = Post::with('categories', 'user', 'media','versions','reviews')->findOrFail($id);
+        $post = Post::with('categories', 'user', 'media', 'versions', 'reviews')->findOrFail($id);
         return new PostResource($post);
     }
 }

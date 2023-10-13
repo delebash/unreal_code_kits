@@ -38,16 +38,14 @@ class ReviewController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function save(StoreReviewRequest $request, Post $post)
-    {
 
+    public function store(StoreReviewRequest $request, Post $post)
+    {
         $this->authorize('review-create');
         $request->validate([
             'review' => 'required|string',
         ]);
+
         $review = new Review;
         $review->review = $request->review;
         $review->rating = $request->rating;
@@ -55,19 +53,10 @@ class ReviewController extends Controller
 
         $post->reviews()->save($review);
         return response()->json(['message' => 'Review Added', 'review' => $review]);
-
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Review $review
-     * @param StoreReviewRequest $request
-     * @return JsonResponse|ReviewResource
-     * @throws AuthorizationException
-     */
-    public function update(Review $review, StoreReviewRequest $request)
+
+    public function update(StoreReviewRequest $request, Post $post, Review $review)
     {
-        error_log('test');
         $this->authorize('review-edit');
         if ($review->user_id !== auth()->user()->id && !auth()->user()->hasPermissionTo('review-all')) {
             return response()->json(['message' => 'Action Forbidden']);
@@ -75,14 +64,12 @@ class ReviewController extends Controller
         $request->validate([
             'review' => 'required|string'
         ]);
+
         $review->review = $request->review;
-        $review->rating = $request->rating;
+        $review->rating = $request->ratings;
+        $review->save();
 
-        if ($review->save()) {
-            return new ReviewResource($review);
-        }
-
-        return response()->json(['status' => 405, 'success' => false]);
+        return response()->json(['message' => 'Review Updated', 'review' => $review]);
     }
 
     /**

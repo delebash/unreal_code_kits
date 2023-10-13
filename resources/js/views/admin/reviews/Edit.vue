@@ -3,9 +3,8 @@
         <div class="col-md-12">
             <div class="card border-0 shadow-sm">
                 <div v-if="content.value" class="card-body">
-                    fgh
                     <star-rating :inline=true :star-size=25 :read-only=false :increment=0.5
-                                 v-model:rating="content.value.rating"></star-rating>
+                                 v-model:rating="content.value.ratings"></star-rating>
                     <textarea class="form-control mt-2" style="min-height: 300px" v-model="content.value.review"/>
                     <div class="text-danger mt-1">
                         {{ msg.error }}
@@ -37,19 +36,24 @@ onMounted(() => {
     axios.get('/api/get-review/' + id)
         .then(response => {
             content.value = response.data.data;
+            console.log(content.value)
         })
+
 })
 
 async function saveReview() {
-    if (content.value.review.length < 50) {
-        msg.error = "Please write at least 50 characters.";
-        return
-    } else {
-        msg.error = ""
-    }
-    axios.put('/api/reviews/' + id, content.value)
+    // if (content.value.review.length < 50) {
+    //     msg.error = "Please write at least 50 characters.";
+    //     return
+    // } else {
+    //     msg.error = ""
+    // }
+console.log(post_id)
+console.log(id)
+    console.log(content)
+    axios.put('/api/posts/' + post_id + '/reviews/' + id, content.value)
         .then(response => {
-            router.push({name: 'public-posts.details', params: {id: post_id}})
+            router.push({name: 'public-posts.details', params: {id: id}})
             swal({
                 icon: 'success',
                 title: 'Review saved successfully'

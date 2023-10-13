@@ -8,6 +8,7 @@ export default function usePosts() {
         content: '',
         category_id: '',
         version_id: '',
+        rating: '',
         thumbnail: '',
         details: ''
     })
@@ -20,6 +21,7 @@ export default function usePosts() {
         page = 1,
         search_category = '',
         search_version = '',
+        search_rating = '',
         search_id = '',
         search_title = '',
         search_content = '',
@@ -30,6 +32,7 @@ export default function usePosts() {
         axios.get('/api/posts?page=' + page +
             '&search_category=' + search_category +
             '&search_version=' + search_version +
+            '&search_rating=' + search_rating +
             '&search_id=' + search_id +
             '&search_title=' + search_title +
             '&search_content=' + search_content +
@@ -45,6 +48,7 @@ export default function usePosts() {
         page = 1,
         search_category = '',
         search_version = '',
+        search_rating = '',
         search_id = '',
         search_title = '',
         search_content = '',
@@ -53,10 +57,10 @@ export default function usePosts() {
         order_column = 'created_at',
         order_direction = 'desc'
     ) => {
-
         axios.get('/api/get-posts?page=' + page +
             '&search_category=' + search_category +
             '&search_version=' + search_version +
+            '&search_rating=' + search_rating +
             '&search_id=' + search_id +
             '&search_title=' + search_title +
             '&search_content=' + search_content +

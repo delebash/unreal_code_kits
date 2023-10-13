@@ -24,8 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('versions', VersionController::class);
     Route::apiResource('roles', RoleController::class);
-    Route::apiResource('reviews', ReviewController::class);
-    Route::post('posts/{post}/reviews', [ReviewController::class, 'save']);
+    Route::apiResource('posts/{post}/reviews', ReviewController::class)->only('store', 'update', 'destroy');
     Route::get('role-list', [RoleController::class, 'getList']);
     Route::get('role-permissions/{id}', [PermissionController::class, 'getRolePermissions']);
     Route::put('/role-permissions', [PermissionController::class, 'updateRolePermissions']);
