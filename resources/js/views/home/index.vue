@@ -11,9 +11,9 @@
         you can use in your Unreal Engine project.
       </p>
     </div>
-        <video id="background-video" ref="video" autoplay muted width="200px" height="200px">
-          <source src="/images/UE_moving_logo_v03_1080.mp4" type="video/mp4">
-        </video>
+    <!--    <video id="background-video" ref="video" autoplay muted width="200px" height="200px">-->
+    <!--      <source src="/images/UE_moving_logo_v03_1080.mp4" type="video/mp4">-->
+    <!--    </video>-->
   </div>
 
 

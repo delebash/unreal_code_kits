@@ -36,21 +36,18 @@ onMounted(() => {
     axios.get('/api/get-review/' + id)
         .then(response => {
             content.value = response.data.data;
-            console.log(content.value)
         })
 
 })
 
 async function saveReview() {
-    // if (content.value.review.length < 50) {
-    //     msg.error = "Please write at least 50 characters.";
-    //     return
-    // } else {
-    //     msg.error = ""
-    // }
-console.log(post_id)
-console.log(id)
-    console.log(content)
+    if (content.value.review.length < 50) {
+        msg.error = "Please write at least 50 characters.";
+        return
+    } else {
+        msg.error = ""
+    }
+
     axios.put('/api/posts/' + post_id + '/reviews/' + id, content.value)
         .then(response => {
             router.push({name: 'public-posts.details', params: {id: id}})
