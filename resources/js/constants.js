@@ -16,7 +16,7 @@ export const editorConfiguration = {
             '|', 'heading',
             '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
             '|', 'bold', 'underline', 'italic', 'horizontalline', 'strikethrough', 'subscript', 'superscript', 'code', 'removeFormat',
-            '|', 'link', 'blockQuote', 'codeBlock', 'uploadImage', 'mediaEmbed',
+            '|', 'link', 'blockQuote', 'codeBlock', 'uploadImage',
             '|', 'insertTable',
             '|', 'alignment', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
             '|', 'highlight', 'specialCharacters', 'findandreplace', 'selectall', 'pagebreak'
