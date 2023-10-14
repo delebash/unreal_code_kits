@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->longText('content');
             $table->longText('details')->nullable();
+            $table->unsignedBigInteger('type');
             $table->timestamps();
 
             $table->foreign('user_id')

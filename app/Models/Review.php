@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-  //  protected $fillable = ['review', 'rating', 'user_id'];
+  //  protected $fillable = ['data', 'rating', 'user_id'];
 
     /**
      * Get the product that owns the review.

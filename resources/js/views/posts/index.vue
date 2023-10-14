@@ -26,6 +26,11 @@
                                   label="name"/>
                     </th>
                     <th class="px-6 py-3 bg-gray-50 text-left">
+                        Type:
+                        <v-select v-model="search_type" :options="typeList"  :reduce="type => type.id"
+                                  label="type"/>
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left">
                         <input v-model="search_content" type="text"
                                class="inline-block mt-1 form-control"
                                placeholder="Filter by Description">
@@ -101,6 +106,7 @@ import StarRating from 'vue-star-rating'
 const review = ref('')
 const search_category = ref('')
 const search_version = ref('')
+const search_type = ref('')
 const search_id = ref('')
 const search_title = ref('')
 const search_content = ref('')
@@ -113,6 +119,7 @@ const {posts, getDisplayPosts, getPostsByUser} = usePosts()
 const {categoryList, getCategoryList} = useCategories()
 const {versionList, getVersionList} = useVersions()
 const ratingList = [1, 2, 3, 4, 5]
+const typeList = [{id:1,type:"Code Kit"},{id:2,type:"Other"}]
 
 const sortColumnsOptions = ['title', 'created_at']
 const sortOrderOptions = ['asc', 'desc']
@@ -146,6 +153,7 @@ const updateOrdering = () => {
         search_category.value,
         search_version.value,
         search_rating.value,
+        search_type.value,
         search_id.value,
         search_title.value,
         search_content.value,
@@ -160,6 +168,7 @@ watch(search_category, (current, previous) => {
         current,
         search_version.value,
         search_rating.value,
+        search_type.value,
         search_id.value,
         search_title.value,
         search_content.value,
@@ -172,6 +181,7 @@ watch(search_version, (current, previous) => {
         search_category.value,
         current,
         search_rating.value,
+        search_type.value,
         search_id.value,
         search_title.value,
         search_content.value,
@@ -184,18 +194,35 @@ watch(search_rating, (current, previous) => {
         search_category.value,
         search_version.value,
         current,
+        search_type.value,
         search_id.value,
         search_title.value,
         search_content.value,
         search_global.value
     )
 })
+
+watch(search_type, (current, previous) => {
+    getDisplayPosts(
+        1,
+        search_category.value,
+        search_version.value,
+        search_rating.value,
+        current,
+        search_id.value,
+        search_title.value,
+        search_content.value,
+        search_global.value
+    )
+})
+
 watch(search_id, (current, previous) => {
     getDisplayPosts(
         1,
         search_category.value,
         search_version.value,
         search_rating.value,
+        search_type.value,
         current,
         search_title.value,
         search_content.value,
@@ -208,6 +235,7 @@ watch(search_title, (current, previous) => {
         search_category.value,
         search_version.value,
         search_rating.value,
+        search_type.value,
         search_id.value,
         current,
         search_content.value,
@@ -220,6 +248,7 @@ watch(search_content, (current, previous) => {
         search_category.value,
         search_version.value,
         search_rating.value,
+        search_type.value,
         search_id.value,
         search_title.value,
         current,
@@ -232,6 +261,7 @@ watch(search_global, _.debounce((current, previous) => {
         search_category.value,
         search_version.value,
         search_rating.value,
+        search_type.value,
         search_id.value,
         search_title.value,
         search_content.value,
@@ -246,6 +276,7 @@ function getUserPosts(id) {
         search_category.value,
         search_version.value,
         search_rating.value,
+        search_type.value,
         search_id.value,
         search_title.value,
         search_content.value,

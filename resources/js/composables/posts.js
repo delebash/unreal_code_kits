@@ -77,6 +77,10 @@ export default function usePosts() {
     const getPost = async (id) => {
         axios.get('/api/posts/' + id)
             .then(response => {
+                //ckeditor doesn't load a null value
+                if(response.data.data.details === null){
+                    response.data.data.details=""
+                }
                 post.value = response.data.data;
             })
     }

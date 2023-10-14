@@ -32,6 +32,7 @@ class PostResource extends JsonResource
             'versions' => $this->versions()->select('id', 'name')->get(),
             'content' => $this->content,
             'reviews' => $this->reviews,
+            'type' => $this->type,
             'details' => $this->details,
             'average_rating' => floatval($this->reviews_avg_rating),
             'image' => $image,

@@ -99,7 +99,7 @@
                                        v-if="can('review-delete')  || review.user_id === user.id  || can('review-all') "
                                        class="ms-2 badge bg-danger" @click="deleteReview(review.id)">Delete</a>
                                     <div class="mt-2">
-                                        {{ review.review }}
+                                        {{ review.data }}
                                     </div>
                                 </div>
                             </div>

@@ -43,11 +43,11 @@ class ReviewController extends Controller
     {
         $this->authorize('review-create');
         $request->validate([
-            'review' => 'required|string',
+            'data' => 'required|string',
         ]);
 
         $review = new Review;
-        $review->review = $request->review;
+        $review->data = $request->data;
         $review->rating = $request->rating;
         $review->user_id = auth()->user()->id;
 
@@ -62,11 +62,11 @@ class ReviewController extends Controller
             return response()->json(['message' => 'Action Forbidden']);
         }
         $request->validate([
-            'review' => 'required|string'
+            'data' => 'required|string'
         ]);
 
-        $review->review = $request->review;
-        $review->rating = $request->ratings;
+        $review->data = $request->data;
+        $review->rating = $request->rating;
         $review->save();
 
         return response()->json(['message' => 'Review Updated', 'review' => $review]);

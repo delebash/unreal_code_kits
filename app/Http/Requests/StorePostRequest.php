@@ -28,6 +28,7 @@ class StorePostRequest extends FormRequest
             'content' => 'required',
             'versions' => 'required',
             'details' => 'nullable',
+            'type' => 'required',
         ];
     }
 }
